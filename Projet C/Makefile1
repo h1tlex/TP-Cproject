@@ -1,0 +1,30 @@
+CC = gcc
+CFLAGS = -Wall -Wextra
+LDFLAGS =
+LDLIBS = -lm
+
+all= contex
+
+contex: contex.o matrice.o image.o svg.o polygone.o contour.o
+	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
+
+contex.o: contex.c matrice.h image.h svg.h polygone.h contour.h
+	$(CC) $(CFLAGS) -c $<
+
+matrice.o: matrice.c matrice.h
+	$(CC) $(CFLAGS) -c $<
+
+image.o: image.c image.h matrice.h
+	$(CC) $(CFLAGS) -c $<
+
+svg.o: svg.c svg.h polygone.h
+	$(CC) $(CFLAGS) -c $<
+
+polygone.o: polygone.c polygone.h
+	$(CC) $(CFLAGS) -c $<
+
+contour.o: contour.c contour.h image.h polygone.h svg.h
+	$(CC) $(CFLAGS) -c $<
+
+clean:
+	rm -f *.o contex
